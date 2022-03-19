@@ -91,6 +91,7 @@ def busBooked():
     #     print(request.form)
       if str(busid[0]) in request.form:
           cur.execute('UPDATE buses SET avail = avail-1 WHERE busid={}'.format(busid[0]))
+          mydb.commit()
           cur.execute("SELECT * FROM buses WHERE busid={}".format(busid[0]))
           bus = cur.fetchone()
           print(bus)
