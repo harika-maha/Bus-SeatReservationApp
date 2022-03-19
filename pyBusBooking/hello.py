@@ -27,7 +27,7 @@ def login():
             session['loggedin'] = True
             session['email'] = account[0]
             print(session['email'])
-            msg = 'Logged in successfully!'
+            return redirect(url_for('buses'))
         else:
             msg = 'Incorrect username/password!'
         return render_template('index.html', msg=msg)
