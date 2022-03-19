@@ -7,6 +7,8 @@ cur = mydb.cursor()
 
 app = Flask(__name__)
 
+session = {'loggedin': False, 'email': ''}
+
 @app.route('/', methods=["POST", "GET"])
 
 def index():
@@ -22,10 +24,13 @@ def login():
     
     for account in accounts:
         if account:
-            return 'Logged in successfully!'
+            session['loggedin'] = True
+            session['email'] = account[0]
+            print(session['email'])
+            msg = 'Logged in successfully!'
         else:
             msg = 'Incorrect username/password!'
-            return msg
+        return render_template('index.html', msg=msg)
             
 @app.route('/register', methods=["GET", "POST"])
 def register():
