@@ -17,12 +17,14 @@ def index():
 @app.route('/login', methods=["POST", "GET"])
 
 def login():
-    email = request.form["Email"]
-    password = request.form["Password"]
-    cur.execute('SELECT * FROM login WHERE email = %s AND password = %s', (email, password))
-    accounts = cur.fetchall()
-    
-    for account in accounts:
+    msg = ''
+    if 'Email' in request.form and 'Password' in request.form:
+        email = request.form["Email"]
+        password = request.form["Password"]
+        cur.execute('SELECT * FROM login WHERE email = %s AND password = %s', (email, password))
+        account = cur.fetchone()
+        print(account)
+        # for account in accounts:
         if account:
             session['loggedin'] = True
             session['email'] = account[0]
@@ -30,7 +32,7 @@ def login():
             return redirect(url_for('buses'))
         else:
             msg = 'Incorrect username/password!'
-        return render_template('index.html', msg=msg)
+    return render_template('index.html', msg = msg)
             
 @app.route('/register', methods=["GET", "POST"])
 def register():
