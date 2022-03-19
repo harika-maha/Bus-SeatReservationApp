@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, redirect, url_for, render_template, request
 import mysql.connector
 
@@ -57,6 +56,12 @@ def buses():
     buses = cur.fetchall()
     return render_template('buses.html', value = buses)
 
+@app.route('/logout')
+def logout():
+   session['loggedin'] = False
+   session['email'] = ''
+   # Redirect to login page
+   return redirect(url_for('login'))
 # @app.route('')
 
 if __name__ == "__main__":
